@@ -1,0 +1,10 @@
+{# templates/categories.html.twig #}
+{% extends 'base.html.twig' %}
+{% block title %}Order status{% endblock %}
+{% block content %}
+    {% if errorInserting %}
+        {{errorInserting}}
+    {% else %}
+      Order processed with no {{ newOrder.codord }}
+    {% endif%}
+{% endblock %}

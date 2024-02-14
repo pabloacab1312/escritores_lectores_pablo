@@ -1,0 +1,37 @@
+{# templates/products.html.twig #}
+{% extends 'base.html.twig' %}
+{% block title %}Products table{% endblock %}
+{% block content %}
+	{% if newOrder %}
+		Order confirmed with number: {{newOrder.codord}}		
+	{% endif %}
+	{% if products|length > 0 %}    	
+    <table>
+        <tr><th>Name</th><th>Description</th><th>Units</th><th>Weight</th><th>Buy</th></tr>
+        {% for prod in products %}
+            <tr>
+				<td>{{ prod.name }}</td>
+				<td>{{ prod.description }}</td>
+				<td>{{ prod.units }}</td>
+				<td>{{ prod.weight }}</td>
+				<td>
+					<form action = {{path('remove')}} method = 'POST'>
+						<input name = 'units' type='number' min = '1' value = '1'>
+						<input type = 'submit' value='Remove'>
+						<input name = 'cod' type='hidden' value = {{prod.codprod}}>
+					</form>
+				</td>
+            </tr>
+        {% endfor %}
+    </table>
+		{% if newOrder is null  %}  
+			<form action =  {{ path('processOrder')}} method = "POST">
+				<input type = "submit" value = "Process order">
+			</form>
+		{% endif %}
+	{% else %}
+		<p>No products in the cart</p>
+	{% endif %}
+	
+{% endblock %}
+
