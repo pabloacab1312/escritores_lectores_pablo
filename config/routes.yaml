@@ -3,3 +3,14 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+    # config/routes.yaml
+index:
+    path: /index
+    controller: App\Controller\TextController::index
+texts:
+    path: /texts
+    controller: App\Controller\TextController::texts
+
+
+
+
