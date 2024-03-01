@@ -12,9 +12,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
     #[ORM\Table(name: 'users')]
     class Users  implements  UserInterface, PasswordAuthenticatedUserInterface{
         #[ORM\Id]
-        #[ORM\Column(type: 'integer', name :'id')]
         #[ORM\GeneratedValue]
-        private $id;
+        #[ORM\Column]
+        private ?int $id = null;
         #[ORM\Column(type: 'string', name :'Email')]
         private $email;
         #[ORM\Column(type: 'string', name :'Password')]
@@ -28,8 +28,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
     
          
 
-        public function getUserId(): string{
-            return $this->email;
+        public function getId(): string{
+            return $this->id;
         }
      
         /**
@@ -44,11 +44,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
         /**
          * Get the value of codRes
          */ 
-        public function getid()
-        {
-                return $this->id;
-        }
-
+     
         /**
          * Get the value of email
          */ 

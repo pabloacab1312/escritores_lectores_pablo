@@ -33,9 +33,13 @@ class Texts
     #[ORM\Column(type: 'string', name :'Privacy')]
     private $privacy;  
 
-    public function getuserId()
+    public function getUserId()
         {
                 return $this->userId;
+        }
+        public function getTextId()
+        {
+                return $this->textId;
         }
 
         /**

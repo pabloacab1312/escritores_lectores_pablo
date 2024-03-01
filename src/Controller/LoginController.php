@@ -2,6 +2,7 @@
 // src/Controller/LoginController.php
 namespace App\Controller;
 
+use App\Entity\Users;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,14 +22,20 @@ class LoginController extends AbstractController
 
         // Determine the target URL where the user should be redirected after login
         $targetUrl = $this->generateUrl('texts'); // Replace 'index' with the actual route name
+        $user = $this->getUser();
 
         return $this->render('index.html.twig', [
             'last_username' => $lastUsername,
             'error'         => $error,
            
+           
         ]);
     }
-
+    public function getUserId($userId, EntityManagerInterface $entityManager): Response
+    {
+        $userId = $entityManager->getRepository(Users::class)->findOneBy(['id' => $userId]);
+   
+    }
     #[Route('/logout', name: 'app_logout')]
     public function logout()
     {

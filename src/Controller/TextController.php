@@ -10,10 +10,12 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 use App\Entity\Texts;
+use App\Entity\Users;
 
 #[IsGranted('ROLE_USER')]
 class TextController extends AbstractController
 {
+   
     #[Route('/texts', name: 'texts_index', methods: ['GET'])]
     public function index(EntityManagerInterface $entityManager): Response
     {
@@ -34,12 +36,23 @@ dump($texts);
         return $this->render('texts/show.html.twig', ['text' => $text]);
     }
 
-    #[Route('/texts/new', name: 'texts_new', methods: ['GET', 'POST'])]
-    public function new(EntityManagerInterface $entityManager, Request $request): Response
+    #[Route('new', name: 'new', methods: ['GET', 'POST'])]
+    public function new(Request $request, $userId,EntityManagerInterface $entityManager): Response
     {
-        // Handle form submission and entity persistence here
+       // Obtener el usuario autenticado
+    $user = $this->getUser();
 
-        return $this->redirectToRoute('texts_index');
+    // Verificar si el usuario está autenticado y obtener el ID
+    $userId = $user ? $user->getId() : null;
+      
+    $description = $request->request->get('description');
+    $content = $request->request->get('content');
+    $privacy = $request->request->get('privacy');
+    $genre = $request->request->get('genre');
+  
+    
+    
+        return $this->redirectToRoute('texts');
     }
 
     #[Route('/texts/edit/{id}', name: 'texts_edit', methods: ['GET', 'POST'])]
