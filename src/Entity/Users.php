@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+use Doctrine\Common\Collections\Collection;
+
 
     #[ORM\Entity]
     #[ORM\Table(name: 'users')]
@@ -25,26 +27,34 @@ use Symfony\Component\Security\Core\User\UserInterface;
         private $name;
         #[ORM\Column(type: 'integer', name :'Role')]
         private $role;  
-    
-         
+        #[ORM\OneToMany(targetEntity:"Users", mappedBy:"texts")]
 
-        public function getId(): string{
-            return $this->id;
-        }
-     
-        /**
-         * Resturant constructor.
-         */
-        public function __construct()
-        {
-        }
+	private $text;
 
-        
+    public function __construct()
+    {
+        $this->texts = new ArrayCollection();
+    }
 
-        /**
-         * Get the value of codRes
-         */ 
-     
+    // Otras propiedades y métodos de la entidad...
+
+    /**
+     * @return Collection|Texts[]
+     */
+    public function getText(): Collection
+    {
+        return $this->text;
+    }
+
+
+public function getUserId(): ?int
+{
+    return $this->userId;
+}
+public function getId(): ?int
+{
+    return $this->id;
+}
         /**
          * Get the value of email
          */ 
@@ -117,7 +127,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
          *
          * @return  self
          */ 
-        public function setPostalCode($name)
+        public function setName($name)
         {
                 $this->name = $name;
 

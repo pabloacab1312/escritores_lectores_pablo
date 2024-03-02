@@ -1,0 +1,30 @@
+{# templates/uploadtext.html.twig #}
+
+
+
+{# Formulario para subir un texto #}
+
+        <form action="{{ path('new' ) }}" method="post">
+     
+      Description: <input type="text" name="newDescription" required><br>
+        Content: <textarea name="newContent" required></textarea><br>
+        Genre:     <select name="newGenre" required>
+        <option value="">Choose a genre</option>
+        <option value="Food">Food</option>
+        <option value="Poetry">Poetry</option>
+        <option value="Drama">Drama</option>
+        <option value="ScienceFiction">SciencieFiction</option>
+        
+    </select><br>
+<br>
+     {# Campo oculto para enviar automáticamente el ID del usuario #}
+    <input type="hidden" name="newUserId" value="{{ app.user.id }}">
+Privacy of the text:
+<select name="newPrivacy" required>
+        <option value="public">Public</option>
+        <option value="private">Private</option>
+    </select><br>
+        <br>
+        <input class='input' type="submit" value="Save text">
+    </form>
+        <hr>

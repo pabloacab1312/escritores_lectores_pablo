@@ -1,51 +1,29 @@
-{# templates/texts.html.twig #}
-{% extends 'base.html.twig' %}
+{# templates/texts/show.html.twig #}
 
+{% extends 'base.html.twig' %}
 {% block body %}
     <div class="container">
         <h1>WELCOME TO YOUR PRINCIPAL PAGEeee</h1>
         <hr>
- 
+ {% block header %}
+    {{ parent() }} {# Esto llama al contenido del bloque header del base.html.twig #}
+{% endblock %}
+TU ID: {{app.user.id}}
 {% for text in texts %}
             <h2>Title: {{ text.description }}</h2>
             <p>Text: {{ text.content }}</p>
-           
+           <p>ID EL AUTOR: {{text.userId}}</p>
             <p>Genre: {{ text.genre }}</p>
             <p>Privacy: {{ text.privacy }}</p>
 
             {# Formulario para eliminar el texto #}
-     <form action = {{path('remove')}} method = 'POST'>
-						
-						<input type = 'submit' value='Remove'>
-						<input name = 'id' type='hidden' value = {{text.textId}}>
-					</form>
+     
             <br>
 
             <br>
             <hr>
        
        
- {# Formulario para subir un texto #}
-  
-        <form action="{{ path('new', {'userId': app.user.id }) }}" method="post">
-     
-            <label for="description">Title:</label>
-            <input type="text" id="description" name="description" required>
-
-            <label for="content">Text:</label>
-            <textarea id="content" name="content" required></textarea>
-
-            <label for="genre">Genre:</label>
-            <input type="text" id="genre" name="genre" required>
-
-            <label for="privacy">Privacy:</label>
-            <select id="privacy" name="privacy" required>
-                <option value="public">Public</option>
-                <option value="private">Private</option>
-            </select>
-
-            <button type="submit">Submit</button>
-        </form>
-        <hr>
+ 
    {% endfor %}
 {% endblock %}

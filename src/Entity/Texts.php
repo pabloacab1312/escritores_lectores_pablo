@@ -33,10 +33,25 @@ class Texts
     #[ORM\Column(type: 'string', name :'Privacy')]
     private $privacy;  
 
+
+    #[ORM\ManyToOne(targetEntity: Users::class,  inversedBy: "texts")]
+    #[ORM\JoinColumn(name: "userId", referencedColumnName: "id"   )]
+    private $user;
+
+    // Otras propiedades y métodos de la entidad...
+
+    public function getUser(): ?Users
+    {
+        return $this->user;
+    }
+    
     public function getUserId()
-        {
-                return $this->userId;
-        }
+    {
+            return $this->userId;
+    }
+
+
+
         public function getTextId()
         {
                 return $this->textId;
@@ -120,6 +135,12 @@ class Texts
 
                 return $this;
         }
+        public function setUserId($userId)
+        {
+                $this->userId = $userId;
+
+                return $this;
+        }
 
        
         public function getContent(): ?string
@@ -127,7 +148,13 @@ class Texts
         return $this->content;
     }
          
-      
+    public function setContent($content)
+    {
+            $this->content = $content;
+
+            return $this;
+    }
+
      
 
         /**

@@ -1,0 +1,15 @@
+{# templates/search/search_users_form.html.twig #}
+
+<form action="{{ path('search') }}" method="post">
+    <label for="username">Selecciona un escritor:</label>
+    <select id="username" name="username" required>
+        <option value="ruben" data-userid="38">Ruben</option>
+        <option value="carlos" data-userid="39">Carlos</option>
+        <option value="pablo" data-userid="40">Pablo</option>
+    </select>
+    
+    {# Input oculto para almacenar el userId #}
+    <input type="hidden" id="userId" name="userId" value="38"> {# Valor por defecto #}
+
+    <button type="submit">Buscar</button>
+</form>

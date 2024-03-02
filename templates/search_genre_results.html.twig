@@ -1,0 +1,27 @@
+{# templates/search/search_genre_results.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Resultados de la Búsqueda por Género - {{ selectedGenre }}</h1>
+
+    {% if results.texts %}
+        <ul>
+            {% for text in results.texts %}
+                <li>
+                    <strong>Título:</strong> {{ text.description }} <br>
+                    <strong>Contenido:</strong> {{ text.content }} <br>
+                    <strong>Género:</strong> {{ text.genre }} <br>
+                    <strong>Autor:</strong> {{ text.user.name }} <br>
+                      <strong>Autor:</strong> {{ text.user.profile }} <br>
+                        <strong>Autor:</strong> {{ text.user.email }} <br>
+                       <strong>Fecha de publicacion:</strong> {{ text.date }} <br>
+                          <strong>Privacidad:</strong> {{ text.privacy }}
+                </li>
+                <hr>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No se encontraron textos para este género.</p>
+    {% endif %}
+{% endblock %}

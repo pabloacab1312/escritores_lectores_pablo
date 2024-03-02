@@ -1,0 +1,15 @@
+{# templates/search2.html.twig #}
+
+<form action="{{ path('search2') }}" method="post">
+    <label for="genre">Selecciona un genero:</label>
+    <select id="genre" name="genre" required>
+        <option value="food" >Food</option>
+        <option value="ScienceFiction" >Sciencie Fiction</option>
+        <option value="drama" >Drama</option>
+         <option value="poetry" >Poetry</option>
+    </select>
+    
+
+
+    <button type="submit">Buscar</button>
+</form>

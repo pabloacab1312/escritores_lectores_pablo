@@ -1,4 +1,18 @@
-Usuario: {{ app.user.mail }}
-<a href="{{ path('categories') }}">Home</a>
-<a href="{{ path('cart') }}">Carrito</a>
-<a href="{{ path('app_logout') }}">Cerrar sesión</a>
+{# templates/nav.html.twig #}
+<style>
+    .vertical-line {
+        border-right: 1px solid black; 
+        margin-right: 5px; 
+        padding-right: 5px; 
+    }
+</style>
+
+Usuario: {{ app.user.email }}
+ID: {{ app.user.id }}
+<span class="vertical-line"></span><a href="{{ path('app_login') }}">Login</a>
+<span class="vertical-line"></span><a href="{{ path('register') }}">Registro</a>
+<span class="vertical-line"></span><a href="{{ path('app_logout') }}">Cerrar sesión</a>
+<span class="vertical-line"></span><a href="{{ path('new') }}">Subir un texto</a>
+<span class="vertical-line"></span><a href="{{ path('profile') }}">Tu perfil</a>
+<span class="vertical-line"></span><a href="{{ path('search') }}">Buscar escritor</a>
+<span class="vertical-line"></span><a href="{{ path('search2') }}">Buscar texto</a>

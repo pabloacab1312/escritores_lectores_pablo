@@ -1,3 +1,97 @@
-body {
-    background-color: skyblue;
+
+.container {
+  
+   
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 50px;
+    
 }
+        
+      body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    padding: 20px;
+    background-color: #f2f2f2;
+}
+
+textarea {
+    width: 100%;
+    height: 100px;
+    
+}
+
+
+select {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+}
+
+.input {
+    background-color: #4caf50;
+    color: white;
+    padding: 14px ;
+    cursor: pointer;
+}
+
+
+
+a {
+    color: #4caf50;
+   
+    margin-top: 10px;
+    display: block;
+}
+
+
+
+hr {
+    margin: 20px 0;
+}
+
+
+.delete-button {
+    background-color: red; 
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+   float: right;
+   
+    margin-top: -10px;
+}
+.profile-image-container {
+    width: 75px; /* Ajusta el tamaño según sea necesario */
+    height: 75px;
+    overflow:visible;
+    border-radius: 80%;
+    margin:  auto;; /* Centra la imagen horizontalmente */
+  }
+
+  .profile-image {
+    width: 100%; /* Garantiza que la imagen llene el contenedor */
+    border-radius: 70%;
+    display: block;
+  }
+
+  /* Estilos adicionales para el contenedor personal-data si es necesario */
+  .personal-data {
+    background-color: cyan;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    font-size: 18px;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+  }
+
+  .personal-data h2 {
+    font-size: 18px;
+   font-family:Arial, Helvetica, sans-serif;
+  }
+
+  .personal-data p {
+    font-size: 18px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  }
+    

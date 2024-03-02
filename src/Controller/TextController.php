@@ -16,71 +16,110 @@ use App\Entity\Users;
 class TextController extends AbstractController
 {
    
-    #[Route('/texts', name: 'texts_index', methods: ['GET'])]
-    public function index(EntityManagerInterface $entityManager): Response
+    #[Route('/texts', name: 'texts_show', methods: ['GET'])]
+    public function show(EntityManagerInterface $entityManager): Response
     {
+        
+        // Obtén los textos asociados con el usuario actual
         $texts = $entityManager->getRepository(Texts::class)->findAll();
-dump($texts);
+    
         return $this->render('texts.html.twig', ['texts' => $texts]);
     }
 
-    #[Route('/texts/{id}', name: 'texts_show', methods: ['GET'])]
-    public function show(EntityManagerInterface $entityManager, $id): Response
+
+    #[Route('new', name: 'new')]
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $text = $entityManager->getRepository(Texts::class)->find($id);
-
-        if (!$text) {
-            throw $this->createNotFoundException('Text not found');
-        }
-
-        return $this->render('texts/show.html.twig', ['text' => $text]);
-    }
-
-    #[Route('new', name: 'new', methods: ['GET', 'POST'])]
-    public function new(Request $request, $userId,EntityManagerInterface $entityManager): Response
-    {
+        // Handle form submission and entity persistence here
        // Obtener el usuario autenticado
-    $user = $this->getUser();
-
-    // Verificar si el usuario está autenticado y obtener el ID
-    $userId = $user ? $user->getId() : null;
-      
-    $description = $request->request->get('description');
-    $content = $request->request->get('content');
-    $privacy = $request->request->get('privacy');
-    $genre = $request->request->get('genre');
-  
     
+
+        // Procesar el formulario cuando se envía
+        if ($request->isMethod('POST')) {
+            $description = $request->request->get('newDescription');
+            $content = $request->request->get('newContent');
+            $userId = $request->request->get('newUserId');
+            $genre = $request->request->get('newGenre');
+            $privacy = $request->request->get('newPrivacy');
+    
+            $text = new Texts();
+            $text->setDescription($description);
+            $text->setContent($content);
+            $text->setUserId($userId);
+            $text->setGenre($genre);
+            $text->setPrivacy($privacy);
+    
+          
+    
+            $entityManager->persist($text);
+            $entityManager->flush();
+        
     
         return $this->redirectToRoute('texts');
     }
-
-    #[Route('/texts/edit/{id}', name: 'texts_edit', methods: ['GET', 'POST'])]
-    public function edit(EntityManagerInterface $entityManager, Request $request, $id): Response
-    {
-        $text = $entityManager->getRepository(Texts::class)->find($id);
-
-        if (!$text) {
-            throw $this->createNotFoundException('Text not found');
-        }
-
-        // Handle form submission and entity persistence here
-
-        return $this->redirectToRoute('texts_index');
-    }
-
-    #[Route('/texts/delete/{id}', name: 'texts_delete', methods: ['DELETE'])]
-    public function delete(EntityManagerInterface $entityManager, $id): Response
-    {
-        $text = $entityManager->getRepository(Texts::class)->find($id);
-
-        if (!$text) {
-            throw $this->createNotFoundException('Text not found');
-        }
-
-        $entityManager->remove($text);
-        $entityManager->flush();
-
-        return $this->redirectToRoute('texts_index');
-    }
+// Renderizar el formulario en la página de subir textos
+return $this->render('uploadtext.html.twig');
 }
+   
+#[Route('/profile', name: 'profile')]
+public function showProfile(): Response
+{
+    // Obtén el usuario actualmente autenticado
+    $user = $this->getUser();
+
+    // Renderiza la plantilla y pasa los datos del usuario
+    return $this->render('profile.html.twig', ['user' => $user]);
+}
+
+#[Route('/search', name: 'search', methods: ['GET', 'POST'])]
+public function search(Request $request, EntityManagerInterface $entityManager): Response
+{
+    if ($request->isMethod('POST')) {
+        // Procesa la solicitud POST y realiza la búsqueda en la tabla Users
+        $username = $request->request->get('username');
+
+        $userId = 38; // Valor por defecto
+
+      
+
+        // Utiliza findOneBy en lugar de findBy para obtener un solo resultado
+        $users = $entityManager->getRepository(Users::class)->findBy(['name' => $username]);
+
+        // Agrega los resultados de la búsqueda en Users al array de resultados
+        $results['users'] = $users;
+
+    
+
+        // Redirige a la vista de resultados con los usuarios encontrados
+        return $this->render('search_users_results.html.twig', ['results' => $results, 'username' => $username]);
+    }
+
+    // Si es una solicitud GET, simplemente renderiza el formulario de búsqueda
+    return $this->render('search.html.twig');
+}
+
+
+
+
+#[Route('/search2', name: 'search2', methods: ['GET', 'POST'])]
+public function searchGenreResults(Request $request, EntityManagerInterface $entityManager): Response
+{
+    if ($request->isMethod('POST')) {
+        $selectedGenre = $request->request->get('genre');
+
+        // Realiza la búsqueda de textos por género en la base de datos
+        $texts = $entityManager->getRepository(Texts::class)->findBy(['genre' => $selectedGenre]);
+
+        // Agrega los resultados de la búsqueda en el array de resultados
+        $results['texts'] = $texts;
+
+        // Redirige a la vista de resultados con los textos encontrados y el género seleccionado
+        return $this->render('search_genre_results.html.twig', ['results' => $results, 'selectedGenre' => $selectedGenre]);
+    }
+
+    // Si es una solicitud GET, simplemente renderiza el formulario de búsqueda
+    return $this->render('search2.html.twig');
+}
+
+}
+

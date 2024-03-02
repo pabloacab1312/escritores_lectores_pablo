@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+<h1>Resultados de la Búsqueda por Nombre - {{ username}}</h1>
+
+            {% if results.users %}
+                <ul>
+                    {% for user in results.users %}
+                        <li>
+                            <strong>Título:</strong> {{ user.text.description }} <br>
+                            <strong>Contenido:</strong> {{ user.text.content }} <br>
+                            <strong>Género:</strong> {{ user.text.genre }} <br>
+                            <strong>Privacidad:</strong> {{ user.text.privacy }} <br>
+                             <strong>Autor:</strong> {{ user.name }} 
+                    </li>
+                <hr>
+         
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No se encontraron usuarios.</p>
+    {% endif %}
+{% endblock %}
